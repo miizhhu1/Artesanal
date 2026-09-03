@@ -12,7 +12,7 @@ public class TestLLenar {
 		rubia.llenarMaquina();
 		rubia.imprimir();
 		
-		Maquina negra = new Maquina("club", "Cerveza buena", 0.03,"C1");
+		Maquina negra = new Maquina("club", "Cerveza buena", 0.03,"C2");
 
 		negra.imprimir();
 		negra.llenarMaquina();
