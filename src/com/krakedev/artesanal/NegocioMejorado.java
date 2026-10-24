@@ -3,7 +3,12 @@ package com.krakedev.artesanal;
 import java.util.ArrayList;
 
 public class NegocioMejorado {
-	ArrayList<Maquina> maquinas;
+	
+	private ArrayList<Maquina> maquinas;
+	private ArrayList<Cliente> clientes = new ArrayList<>();
+	private int ultimoCodigo = 100;
+	
+	
 
 	// Constructor
 	public NegocioMejorado() {
@@ -70,5 +75,20 @@ public class NegocioMejorado {
 		return null;
 
 	}
+	
+	//registrar cliente
+	public void registrarCliente(String nombre, String cedula) {
+
+	    // Creamos el objeto Cliente
+	    Cliente cliente = new Cliente(nombre, cedula);
+
+	    // Asignamos el código consecutivo
+	    cliente.setCodigo(ultimoCodigo);
+	    ultimoCodigo++;
+
+	    // Agregamos el cliente a la lista
+	    clientes.add(cliente);
+	}
+	
 
 }
