@@ -3,12 +3,10 @@ package com.krakedev.artesanal;
 import java.util.ArrayList;
 
 public class NegocioMejorado {
-	
+
 	private ArrayList<Maquina> maquinas;
 	private ArrayList<Cliente> clientes = new ArrayList<>();
 	private int ultimoCodigo = 100;
-	
-	
 
 	// Constructor
 	public NegocioMejorado() {
@@ -38,14 +36,14 @@ public class NegocioMejorado {
 
 	// agregar maquina
 	public boolean agregarMaquina(String nombreCerveza, String descripcion, double precioPorMl) {
-		// Generamos el código de la máquina
+		// Generamos el codigo de la máquina
 		String codigo = generarCodigo();
 
 		// Buscamos si ya existe una máquina con ese código
 		Maquina existente = recuperarMaquina(codigo);
 
 		if (existente == null) {
-			//creamos la máquina
+			// creamos la máquina
 			Maquina maquina = new Maquina(nombreCerveza, descripcion, precioPorMl, codigo);
 			maquinas.add(maquina);
 			return true;
@@ -75,20 +73,81 @@ public class NegocioMejorado {
 		return null;
 
 	}
-	
-	//registrar cliente
+
+	// registrar cliente
 	public void registrarCliente(String nombre, String cedula) {
 
-	    // Creamos el objeto Cliente
-	    Cliente cliente = new Cliente(nombre, cedula);
+		// Creamos el objeto Cliente
+		Cliente cliente = new Cliente(nombre, cedula);
 
-	    // Asignamos el código consecutivo
-	    cliente.setCodigo(ultimoCodigo);
-	    ultimoCodigo++;
+		// Asignamos el código consecutivo
+		cliente.setCodigo(ultimoCodigo);
+		ultimoCodigo++;
 
-	    // Agregamos el cliente a la lista
-	    clientes.add(cliente);
+		// Agregamos el cliente a la lista
+		clientes.add(cliente);
 	}
-	
+
+	// buscar clientes por cedula
+	public Cliente buscarCliente(String cedula) {
+		for (int i = 0; i < clientes.size(); i++) {
+			Cliente cliente = clientes.get(i);
+			if (cliente.getCedula().equals(cedula)) {
+				return cliente;
+			}
+		}
+		return null;
+	}
+
+	// buscar clientes por codigo
+	public Cliente buscarClientePorCodigo(int codigo) {
+		for (int i = 0; i < clientes.size(); i++) {
+			Cliente cliente = clientes.get(i);
+			if (cliente.getCodigo() == codigo) {
+				return cliente;
+			}
+		}
+		return null;
+	}
+
+	// consumir cerveza
+	public void consumirCerveza(int codigoCliente, String codigoMaquina, double cantidad) {
+
+		// buscar la máquina por su código
+		Maquina maquina = recuperarMaquina(codigoMaquina);
+
+		// buscar el cliente por su código
+		Cliente cliente = buscarClientePorCodigo(codigoCliente);
+
+		// invocar servirCerveza y guardar el retorno
+		double valor = maquina.servirCerveza(cantidad);
+
+		// registrar y acumular el consumo del cliente
+		registrarConsumo(cliente, valor);
+
+	}
+
+	// registrar consumo
+
+	public void registrarConsumo(Cliente cliente, double valor) {
+
+		// Obtener el consumo anterior y sumar el nuevo valor
+		cliente.setTotalConsumo(cliente.getTotalConsumo() + valor);
+	}
+
+	// consultar el total vendido por el negocio
+	public double consultarValorVendido() {
+
+		double totalVendido = 0;
+		
+		for (int i = 0; i < clientes.size(); i++) {
+
+			Cliente cliente = clientes.get(i);
+
+			// Sumamos el consumo de cada cliente
+			totalVendido = totalVendido + cliente.getTotalConsumo();
+		}
+		return totalVendido;
+	}
 
 }
