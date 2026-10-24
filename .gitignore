@@ -2,4 +2,5 @@ bin/
 .settings/
 .proyect
 .classpath
+.metadata/
 
