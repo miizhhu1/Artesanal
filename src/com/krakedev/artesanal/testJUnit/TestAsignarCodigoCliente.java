@@ -22,5 +22,7 @@ public class TestAsignarCodigoCliente {
 		assertEquals(100,mario.getCodigo());
 		assertEquals(101,andres.getCodigo());
 	}
+	
+	
 
 }
